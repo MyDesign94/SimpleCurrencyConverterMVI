@@ -9,6 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import ru.isaevSV.currencyconverter.R
 import ru.isaevSV.currencyconverter.domain.model.Currency
@@ -22,6 +23,8 @@ fun DisplayCurrencyListView(
     listData: List<Currency>,
     fromCurrency: Int,
     toCurrency: Int,
+    padding: Dp = CurrencyTheme.shapes.padding,
+    textColor: Color = CurrencyTheme.colors.primaryText,
     onSelectionFrom: (Int) -> Unit,
     onSelectionTo: (Int) -> Unit,
     onGoConvertor: () -> Unit
@@ -38,15 +41,15 @@ fun DisplayCurrencyListView(
             Text(
                 modifier = modifier
                     .fillMaxWidth()
-                    .padding(CurrencyTheme.shapes.padding),
+                    .padding(padding),
                 text = stringResource(R.string.title_display_currency),
                 style = CurrencyTheme.typography.heading,
-                color = CurrencyTheme.colors.primaryText
+                color = textColor
             )
             Spacer(modifier = modifier.width(50.dp))
             Row(
                 modifier = modifier
-                    .padding(CurrencyTheme.shapes.padding)
+                    .padding(padding)
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.Top
@@ -59,16 +62,16 @@ fun DisplayCurrencyListView(
                     ),
                     onItemSelected = onSelectionFrom
                 )
-                Spacer(modifier = modifier.width(15.dp))
+                Spacer(modifier = modifier.width(padding))
                 Icon(
                     modifier = Modifier
-                        .padding(top = 16.dp)
+                        .padding(top = padding)
                         .size(30.dp),
                     imageVector = Icons.Filled.SyncAlt,
                     contentDescription = "SyncAlt",
                     tint = CurrencyTheme.colors.secondaryText
                 )
-                Spacer(modifier = modifier.width(15.dp))
+                Spacer(modifier = modifier.width(padding))
                 DropMenuItem(
                     model = DropMenuItemModel(
                         title = listData[toCurrency].charCode,
@@ -81,7 +84,6 @@ fun DisplayCurrencyListView(
             Spacer(modifier = modifier.weight(1f))
             Button(
                 modifier = Modifier
-                    .padding(top = 30.dp)
                     .height(48.dp)
                     .fillMaxWidth(),
                 onClick = onGoConvertor,
@@ -95,7 +97,7 @@ fun DisplayCurrencyListView(
                 Text(
                     text = stringResource(R.string.сonvert),
                     style = CurrencyTheme.typography.body,
-                    color = Color.White
+                    color = textColor
                 )
             }
         }

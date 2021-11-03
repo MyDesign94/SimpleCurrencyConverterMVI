@@ -53,7 +53,7 @@ class MainActivity : ComponentActivity() {
                     )
                 }
 
-                Surface(color = MaterialTheme.colors.background) {
+                Surface(color = CurrencyTheme.colors.secondaryBackground) {
                     Column {
                         Box(
                             modifier = Modifier.weight(1f)

@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import ru.isaevSV.currencyconverter.R
 import ru.isaevSV.currencyconverter.domain.model.Currency
@@ -25,6 +26,8 @@ fun DisplayConverterView(
     fromCurrency: CurrencyFieldState,
     toCurrency: CurrencyFieldState,
     conversionResult: String,
+    padding: Dp = CurrencyTheme.shapes.padding,
+    textColor: Color = CurrencyTheme.colors.primaryText,
     onEnteredFrom: (String) -> Unit,
     onEnteredTo: (String) -> Unit,
     onCurrencyClick: () -> Unit
@@ -40,12 +43,12 @@ fun DisplayConverterView(
         Column() {
             Text(
                 modifier = Modifier
-                    .padding(CurrencyTheme.shapes.padding)
+                    .padding(padding)
                     .fillMaxWidth(),
                 text = stringResource(R.string.converter),
                 textAlign = TextAlign.Start,
                 style = CurrencyTheme.typography.heading,
-                color = CurrencyTheme.colors.primaryText
+                color = textColor
             )
             CurrencyCard(
                 title = data[fromCurrency.index].charCode,
@@ -62,16 +65,16 @@ fun DisplayConverterView(
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(CurrencyTheme.shapes.padding),
+                    .padding(padding),
                 text = conversionResult,
                 textAlign = TextAlign.Center,
                 style = CurrencyTheme.typography.body,
-                color = CurrencyTheme.colors.primaryText
+                color = textColor
             )
             Spacer(modifier = modifier.weight(1f))
             Button(
                 modifier = Modifier
-                    .padding(top = 16.dp)
+                    .padding(top = padding)
                     .height(48.dp)
                     .fillMaxWidth(),
                 onClick = onCurrencyClick,
@@ -85,7 +88,7 @@ fun DisplayConverterView(
                 Text(
                     text = stringResource(R.string.choose_currency),
                     style = CurrencyTheme.typography.body,
-                    color = Color.White
+                    color = textColor
                 )
             }
         }

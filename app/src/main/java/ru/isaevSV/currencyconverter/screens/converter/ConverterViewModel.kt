@@ -34,8 +34,8 @@ class ConverterViewModel @Inject constructor(
 
     private val _currencyIndex: MutableState<CurrencyIndex> = mutableStateOf(
         CurrencyIndex(
-            indexFrom = 0,
-            indexTo = 1
+            indexFrom = 34,
+            indexTo = 10
         )
     )
 
@@ -56,19 +56,13 @@ class ConverterViewModel @Inject constructor(
         }
     }
 
-    private fun reduce(
-        event: ConverterEvent,
-        currentState: ConverterViewState.Loading
-    ) {
+    private fun reduce(event: ConverterEvent, currentState: ConverterViewState.Loading) {
         when (event) {
             ConverterEvent.LoadingData -> dataPreparation()
         }
     }
 
-    private fun reduce(
-        event: ConverterEvent,
-        currentState: ConverterViewState.Error
-    ) {
+    private fun reduce(event: ConverterEvent, currentState: ConverterViewState.Error) {
         when (event) {
             ConverterEvent.Reloading -> dataPreparation()
         }
@@ -106,7 +100,7 @@ class ConverterViewModel @Inject constructor(
                                 index = _currencyIndex.value.indexTo,
                                 text = ""
                             ),
-                            conversionResult = "Result"
+                            conversionResult = "I am waiting for you to enter data"
                         )
                     )
                 }.launchIn(viewModelScope)
@@ -135,7 +129,7 @@ class ConverterViewModel @Inject constructor(
                         index = currentState.toCurrency.index,
                         text = ""
                     ),
-                    conversionResult = "Result"
+                    conversionResult = "I am waiting for you to enter data"
                 )
             )
         } else {

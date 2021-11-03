@@ -16,10 +16,10 @@ import ru.isaevSV.currencyconverter.screens.ui.theme.CurrencyTheme
 @Composable
 fun LoadingView(
     modifier: Modifier,
-    backgroundColor: Color = CurrencyTheme.colors.primaryBackground,
+    backgroundColor: Color = CurrencyTheme.colors.secondaryBackground,
     contentAlignment: Alignment = Alignment.Center,
     progressIndicatorSize: Dp = 48.dp,
-    progressIndicatorColor: Color = CurrencyTheme.colors.tintColor,
+    progressIndicatorColor: Color = CurrencyTheme.colors.controlColor,
     progressIndicatorWidth: Dp = 4.dp
 ) {
     Box(

@@ -9,6 +9,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import ru.isaevSV.currencyconverter.R
 import ru.isaevSV.currencyconverter.screens.ui.theme.CurrencyTheme
@@ -16,52 +18,56 @@ import ru.isaevSV.currencyconverter.screens.ui.theme.CurrencyTheme
 @Composable
 fun ErrorView(
     modifier: Modifier,
+    contentAlignment: Alignment.Horizontal = Alignment.CenterHorizontally,
+    padding: Dp = CurrencyTheme.shapes.padding,
+    contentColor: Color = CurrencyTheme.colors.controlColor,
+    textColor: Color = CurrencyTheme.colors.primaryText,
+    textStyle: TextStyle = CurrencyTheme.typography.body,
     onReloadClick: () -> Unit
 ) {
     Surface(
         modifier = modifier.fillMaxSize(),
-        color = CurrencyTheme.colors.primaryBackground
+        color = CurrencyTheme.colors.secondaryBackground
     ) {
         Box {
             Column(
                 modifier = Modifier
-                    .padding(16.dp)
+                    .padding(padding)
                     .align(Alignment.Center),
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = contentAlignment
             ) {
                 Icon(
                     modifier = Modifier
                         .size(90.dp)
-                        .align(Alignment.CenterHorizontally),
+                        .align(contentAlignment),
                     imageVector = Icons.Filled.Error,
-                    tint = CurrencyTheme.colors.controlColor,
+                    tint = contentColor,
                     contentDescription = "Error Icon"
                 )
 
                 Text(
-                    modifier = Modifier.padding(top = 24.dp),
+                    modifier = Modifier.padding(top = padding),
                     text = stringResource(R.string.error_message),
-                    style = CurrencyTheme.typography.body,
-                    color = CurrencyTheme.colors.primaryText
+                    style = textStyle,
+                    color = textColor
                 )
-
                 Button(
                     modifier = Modifier
-                        .padding(top = 16.dp)
+                        .padding(top = padding)
                         .height(48.dp)
                         .fillMaxWidth(),
                     onClick = onReloadClick,
                     colors = ButtonDefaults.buttonColors(
-                        backgroundColor = CurrencyTheme.colors.controlColor,
-                        disabledBackgroundColor = CurrencyTheme.colors.controlColor.copy(
+                        backgroundColor = contentColor,
+                        disabledBackgroundColor = contentColor.copy(
                             alpha = 0.3f
                         )
                     )
                 ) {
                     Text(
                         text = stringResource(R.string.reload),
-                        style = CurrencyTheme.typography.body,
-                        color = Color.White
+                        style = textStyle,
+                        color = textColor
                     )
                 }
             }

@@ -13,8 +13,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import ru.isaevSV.currencyconverter.domain.model.Currency
 import ru.isaevSV.currencyconverter.screens.ui.theme.ConverterTheme
@@ -29,6 +33,12 @@ data class DropMenuItemModel(
 @Composable
 fun DropMenuItem(
     model: DropMenuItemModel,
+    padding: Dp = CurrencyTheme.shapes.padding,
+    secondaryColor: Color = CurrencyTheme.colors.secondaryText,
+    primaryColor: Color = CurrencyTheme.colors.primaryText,
+    headingStyle: TextStyle = CurrencyTheme.typography.heading,
+    backgroundColor: Color = CurrencyTheme.colors.primaryBackground,
+    shape: Shape = CurrencyTheme.shapes.cornersStyle,
     onItemSelected: ((Int) -> Unit)? = null
 ) {
     var isDropdownOpen by remember { mutableStateOf(false) }
@@ -45,46 +55,46 @@ fun DropMenuItem(
     ) {
         Card(
             modifier = Modifier.fillMaxWidth(),
-            backgroundColor = CurrencyTheme.colors.primaryBackground,
+            backgroundColor = backgroundColor,
             elevation = 8.dp,
-            shape = CurrencyTheme.shapes.cornersStyle
+            shape = shape
         ) {
             Row(
                 Modifier
                     .clickable {
                         isDropdownOpen = !isDropdownOpen
                     }
-                    .padding(CurrencyTheme.shapes.padding)
-                    .background(CurrencyTheme.colors.primaryBackground),
+                    .padding(padding)
+                    .background(backgroundColor),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
                 Text(
                     modifier = Modifier
                         .weight(1f)
-                        .padding(end = CurrencyTheme.shapes.padding),
+                        .padding(end = padding),
                     text = model.title,
-                    style = CurrencyTheme.typography.heading,
-                    color = CurrencyTheme.colors.primaryText
+                    style = headingStyle,
+                    color = primaryColor
                 )
 
                 Icon(
                     modifier = Modifier
-                        .padding(start = CurrencyTheme.shapes.padding / 4)
+                        .padding(start = padding / 4)
                         .size(18.dp)
                         .align(Alignment.CenterVertically),
                     imageVector = icon,
                     contentDescription = "Arrow",
-                    tint = CurrencyTheme.colors.secondaryText
+                    tint = secondaryColor
                 )
             }
         }
         if (isDropdownOpen) {
             Card(
                 modifier = Modifier.fillMaxWidth(),
-                backgroundColor = CurrencyTheme.colors.primaryBackground,
+                backgroundColor = backgroundColor,
                 elevation = 8.dp,
-                shape = CurrencyTheme.shapes.cornersStyle
+                shape = shape
             ) {
                 LazyColumn(
                     modifier = Modifier.fillMaxWidth().fillMaxHeight(0.8f)
@@ -102,13 +112,13 @@ fun DropMenuItem(
                                     },
                                 text = value.charCode,
                                 textAlign = TextAlign.Center,
-                                style = CurrencyTheme.typography.heading,
-                                color = CurrencyTheme.colors.primaryText
+                                style = headingStyle,
+                                color = primaryColor
                             )
                             Divider(
                                 modifier = Modifier.padding(start = 5.dp, end = 5.dp),
                                 thickness = 0.5.dp,
-                                color = CurrencyTheme.colors.secondaryText.copy(
+                                color = secondaryColor.copy(
                                     alpha = 0.3f
                                 )
                             )
