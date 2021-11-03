@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">CurrencyConverter</string>
+    <string name="reload">Reload</string>
+    <string name="error_message">Oops something went wrong. Try again</string>
+    <string name="сonvert">Convert</string>
+    <string name="title_display_currency">Currency selection</string>
+    <string name="title_settings">Settings</string>
+    <string name="title_currency">Currency</string>
+    <string name="title_convector">Convector</string>
+    <string name="converter">Converter</string>
+    <string name="choose_currency">Choose currency</string>
+    <string name="hintTextField">Enter number</string>
+</resources>
