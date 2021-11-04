@@ -16,10 +16,10 @@ class GetAllCurrencyXMLUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(): Flow<Resource<AllCurrency>> = flow {
         try {
+            Log.e("rep", "data from XML")
             emit(Resource.Loading<AllCurrency>())
             val currentList = mutableListOf<Currency>()
             val data = repository.getFeed()
-            Log.e("data_cbr", data.date.toString())
             data.ValuteList?.let { list ->
                 list.forEach { currency ->
                     currentList.add(

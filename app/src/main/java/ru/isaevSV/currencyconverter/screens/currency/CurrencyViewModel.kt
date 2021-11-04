@@ -1,7 +1,6 @@
 package ru.isaevSV.currencyconverter.screens.currency
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -70,78 +69,60 @@ class CurrencyViewModel @Inject constructor(
 
     @SuppressLint("SimpleDateFormat")
     private fun loadingData(needReload: Boolean = false) {
-        Log.e("log", "Start Loading")
         if (needReload) {
-            Log.e("log", "post State Loading(Reload)")
             _viewState.postValue(CurrencyViewState.Loading)
         }
         viewModelScope.launch {
             try {
                 if (!AppPreference.getInitUser()) {
-                    Log.e("log", "First login")
                     remoteUseCase().onEach { result ->
                         when (result) {
                             is Resource.Success -> {
                                 result.data?.let {
-                                    Log.e("log", "insert first data to DB")
                                     dataSource.insertCurrency(
                                         AllCurrencyDto(
                                             data = Gson().toJson(AllCurrencyJson(data = result.data.data)),
                                             date = result.data.date
                                         )
                                     )
-                                    Log.e("log", "post State Display after insert data to DB")
                                     _viewState.postValue(
                                         CurrencyViewState.Display(
                                             data = result.data.data
                                         )
                                     )
                                 }
-                                Log.e("log", "setInitUser - True")
                                 AppPreference.setInitUser(true)
                             }
                             is Resource.Loading -> {
-                                Log.e("log", "post State Loading")
                                 _viewState.postValue(CurrencyViewState.Loading)
                             }
                             is Resource.Error -> {
-                                Log.e("log", "post State Error")
                                 _viewState.postValue(CurrencyViewState.Error)
                             }
                         }
                     }.launchIn(viewModelScope)
                 } else {
-                    Log.e("log", "not first loading")
-                    Log.e("log", "get Data from DB")
                     dataSource.getCurrency().onEach { dataFromDB ->
-                        Log.e("log", "successful catch data")
                         if (dataFromDB.date >= SimpleDateFormat("dd.M.yyyy").format(Date())) {
-                            Log.e("log", "date ${dataFromDB.date} >= ${SimpleDateFormat("dd.M.yyyy").format(Date())}")
                             val currencyList = mutableListOf<Currency>()
-                            Log.e("log", "converting data from Json")
                             Gson().fromJson(dataFromDB.data, AllCurrencyJson::class.java)
                                 .data.forEach { currency -> currencyList.add(currency) }
-                            Log.e("log", "post State Display")
                             _viewState.postValue(
                                 CurrencyViewState.Display(
                                     data = currencyList
                                 )
                             )
                         } else {
-                            Log.e("log", "date < currentDate ---> need refresh data")
                             remoteUseCase().onEach { result ->
                                 when (result) {
                                     is Resource.Success -> {
-                                        Log.e("log", "remote get data success")
                                         result.data?.let {
-                                            Log.e("log", "insert fresh data to DB")
                                             dataSource.insertCurrency(
                                                 AllCurrencyDto(
                                                     data = Gson().toJson(AllCurrencyJson(data = result.data.data)),
                                                     date = result.data.date
                                                 )
                                             )
-                                            Log.e("log", "post State Display")
                                             _viewState.postValue(
                                                 CurrencyViewState.Display(
                                                     data = result.data.data
@@ -150,11 +131,9 @@ class CurrencyViewModel @Inject constructor(
                                         }
                                     }
                                     is Resource.Loading -> {
-                                        Log.e("log", "post State Loading")
                                         _viewState.postValue(CurrencyViewState.Loading)
                                     }
                                     is Resource.Error -> {
-                                        Log.e("log", "post State Error")
                                         _viewState.postValue(CurrencyViewState.Error)
                                     }
                                 }
@@ -173,22 +152,12 @@ class CurrencyViewModel @Inject constructor(
         currentState: CurrencyViewState.Display,
         from: Boolean = false
     ) {
-        if (from) {
-            _viewState.postValue(
-                CurrencyViewState.Display(
-                    data = currentState.data,
-                    fromCurrency = index,
-                    toCurrency = currentState.toCurrency
-                )
+        _viewState.postValue(
+            CurrencyViewState.Display(
+                data = currentState.data,
+                fromCurrency = if (from) index else currentState.fromCurrency,
+                toCurrency = if (from) currentState.toCurrency else index
             )
-        } else {
-            _viewState.postValue(
-                CurrencyViewState.Display(
-                    data = currentState.data,
-                    fromCurrency = currentState.fromCurrency,
-                    toCurrency = index
-                )
-            )
-        }
+        )
     }
 }

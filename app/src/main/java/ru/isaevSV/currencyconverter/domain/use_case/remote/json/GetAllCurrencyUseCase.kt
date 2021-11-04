@@ -1,5 +1,6 @@
 package ru.isaevSV.currencyconverter.domain.use_case.remote.json
 
+import android.util.Log
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
@@ -16,9 +17,13 @@ class GetAllCurrencyUseCase @Inject constructor(
 
     operator fun invoke(): Flow<Resource<AllCurrency>> = flow {
         try {
+            Log.e("rep", "data from Json")
             emit(Resource.Loading<AllCurrency>())
             val resultData = repository.getCurrencyDto().toAllCurrency()
-            emit(Resource.Success<AllCurrency>(data = resultData))
+            val currentDate = resultData.date
+                .split("T")[0].split("-")
+                .asReversed().joinToString(".")
+            emit(Resource.Success<AllCurrency>(data = AllCurrency(date = currentDate, data = resultData.data)))
         } catch (e: HttpException) {
             emit(
                 Resource.Error<AllCurrency>(
