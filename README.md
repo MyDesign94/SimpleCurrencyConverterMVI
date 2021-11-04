@@ -10,7 +10,7 @@ An example of a test task for creating a simple currency converter application f
     - Domain (for model, use case, repositories).
     - Screens (for for UI logic, viewModels, viewStates end events)
 - Dependency injection with [Hilt](https://developer.android.com/training/dependency-injection/hilt-android).
-- Rreactive programming with [kotlin coroutines](https://kotlinlang.org/docs/coroutines-overview.html).
+- Reactive programming with [kotlin coroutines](https://kotlinlang.org/docs/coroutines-overview.html).
 - Networking with [Retrofit](https://square.github.io/retrofit/)
 - Local data with [Room](https://developer.android.com/topic/libraries/architecture/room).
 - [Jetpack Compose](https://developer.android.com/jetpack/compose) for UI.
