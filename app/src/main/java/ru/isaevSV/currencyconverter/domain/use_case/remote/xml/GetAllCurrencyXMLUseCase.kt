@@ -14,7 +14,7 @@ import javax.inject.Inject
 class GetAllCurrencyXMLUseCase @Inject constructor(
     private val repository: CentralBankRussiaRepositoryXML
 ) {
-    suspend operator fun invoke(): Flow<Resource<AllCurrency>> = flow {
+    operator fun invoke(): Flow<Resource<AllCurrency>> = flow {
         try {
             Log.e("rep", "data from XML")
             emit(Resource.Loading<AllCurrency>())
