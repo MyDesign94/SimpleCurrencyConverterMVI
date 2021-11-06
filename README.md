@@ -3,6 +3,10 @@
 
 An example of a test task for creating a simple currency converter application for the Android platform. The app is developed using Kotlin, MVI, Dagger Hilt, Retrofit, Jetpack Compose.
 
+## **Screen shots**
+
+![Screens](https://github.com/MyDesign94/SimpleCurrencyConverterMVI/blob/master/CurrencyConverterScreens.png)
+
 ## **Features**
 
 - Architecture MVI
